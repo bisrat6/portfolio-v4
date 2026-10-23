@@ -97,6 +97,12 @@ export const DATA = {
         icon: Icons.whatsapp,
         navbar: true,
       },
+      Upwork: {
+        name: "Upwork",
+        url: "https://www.upwork.com/freelancers/~01bisratberiso",
+        icon: Icons.upwork,
+        navbar: true,
+      },
       email: {
         name: "Email",
         url: "mailto:bisratberiso@gmail.com",
