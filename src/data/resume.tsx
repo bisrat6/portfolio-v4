@@ -101,7 +101,7 @@ export const DATA = {
         name: "Upwork",
         url: "https://www.upwork.com/freelancers/~01bisratberiso",
         icon: Icons.upwork,
-        navbar: true,
+        navbar: false,
       },
       email: {
         name: "Email",
