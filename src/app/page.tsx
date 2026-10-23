@@ -10,6 +10,34 @@ import HackathonsSection from "@/components/section/hackathons-section";
 import ProjectsSection from "@/components/section/projects-section";
 import WorkSection from "@/components/section/work-section";
 import { ArrowUpRight } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+function EducationLogo({ src, alt }: { src?: string; alt: string }) {
+  if (!src) {
+    return (
+      <div className="size-12 md:size-13 rounded-full bg-muted flex items-center justify-center text-xs font-semibold shrink-0 shadow-xs flex-none">
+        {alt.slice(0, 2).toUpperCase()}
+      </div>
+    );
+  }
+
+  const isA2SV = alt.toLowerCase().includes("a2sv") || src.includes("a2sv");
+
+  return (
+    <div
+      className={cn(
+        "size-12 md:size-13 rounded-full flex items-center justify-center overflow-hidden shrink-0 shadow-xs border border-border/40 flex-none",
+        isA2SV ? "p-0 bg-[#2d388a]" : "bg-white p-1.5"
+      )}
+    >
+      <img
+        src={src}
+        alt={alt}
+        className={cn("w-full h-full", isA2SV ? "object-cover" : "object-contain")}
+      />
+    </div>
+  );
+}
 
 const BLUR_FADE_DELAY = 0.04;
 
@@ -34,7 +62,7 @@ export default function Page() {
             </div>
             <BlurFade delay={BLUR_FADE_DELAY} className="order-1 md:order-2">
               <Avatar className="size-24 md:size-32 border rounded-full shadow-lg ring-4 ring-muted">
-                <AvatarImage alt={DATA.name} src={DATA.avatarUrl} />
+                <AvatarImage alt={DATA.name} src={DATA.avatarUrl} className="object-cover object-center" />
                 <AvatarFallback>{DATA.initials}</AvatarFallback>
               </Avatar>
             </BlurFade>
@@ -83,15 +111,7 @@ export default function Page() {
                   className="flex items-center gap-x-3 justify-between group"
                 >
                   <div className="flex items-center gap-x-3 flex-1 min-w-0">
-                    {education.logoUrl ? (
-                      <img
-                        src={education.logoUrl}
-                        alt={education.school}
-                        className="size-8 md:size-10 p-1 border rounded-full shadow ring-2 ring-border overflow-hidden object-contain flex-none"
-                      />
-                    ) : (
-                      <div className="size-8 md:size-10 p-1 border rounded-full shadow ring-2 ring-border bg-muted flex-none" />
-                    )}
+                    <EducationLogo src={education.logoUrl} alt={education.school} />
                     <div className="flex-1 min-w-0 flex flex-col gap-0.5">
                       <div className="font-semibold leading-none flex items-center gap-2">
                         {education.school}

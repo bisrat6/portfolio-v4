@@ -24,20 +24,25 @@ export default function ContactSection() {
           Get in Touch
         </h2>
         <p className="mx-auto max-w-lg text-muted-foreground text-balance">
-          Want to chat? Just shoot me a dm{" "}
+          Have a project in mind, an opportunity to discuss, or just want to connect? Reach out via{" "}
           <Link
-            href={DATA.contact.social.X.url}
+            href={DATA.contact.social.WhatsApp.url}
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-500 hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
           >
-            with a direct question on twitter
+            WhatsApp (+251 982 305 539)
           </Link>{" "}
-          and I&apos;ll respond whenever I can. I will ignore all
-          soliciting.
+          or send an email directly to{" "}
+          <Link
+            href={DATA.contact.social.email.url}
+            className="text-blue-500 hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+          >
+            {DATA.contact.email}
+          </Link>
+          .
         </p>
       </div>
     </div>
   );
 }
-

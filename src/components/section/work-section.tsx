@@ -16,17 +16,28 @@ function LogoImage({ src, alt }: { src: string; alt: string }) {
 
   if (!src || imageError) {
     return (
-      <div className="size-8 md:size-10 p-1 border rounded-full shadow ring-2 ring-border bg-muted flex-none" />
+      <div className="size-12 md:size-13 rounded-full bg-muted flex items-center justify-center text-xs font-semibold flex-none shadow-xs">
+        {alt.slice(0, 2).toUpperCase()}
+      </div>
     );
   }
 
+  const isRevelo = alt.toLowerCase().includes("revelo") || src.includes("revelo");
+
   return (
-    <img
-      src={src}
-      alt={alt}
-      className="size-8 md:size-10 p-1 border rounded-full shadow ring-2 ring-border overflow-hidden object-contain flex-none"
-      onError={() => setImageError(true)}
-    />
+    <div
+      className={cn(
+        "size-12 md:size-13 rounded-full flex items-center justify-center overflow-hidden shrink-0 shadow-xs border border-border/40 flex-none",
+        isRevelo ? "p-0 bg-[#28008c]" : "bg-white p-1.5"
+      )}
+    >
+      <img
+        src={src}
+        alt={alt}
+        className={cn("w-full h-full", isRevelo ? "object-cover" : "object-contain")}
+        onError={() => setImageError(true)}
+      />
+    </div>
   );
 }
 

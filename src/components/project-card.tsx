@@ -5,10 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Markdown from "react-markdown";
 
-function ProjectImage({ src, alt }: { src: string; alt: string }) {
+function ProjectImage({ src, alt, className }: { src: string; alt: string; className?: string }) {
   const [imageError, setImageError] = useState(false);
 
   if (!src || imageError) {
@@ -19,7 +19,7 @@ function ProjectImage({ src, alt }: { src: string; alt: string }) {
     <img
       src={src}
       alt={alt}
-      className="w-full h-48 object-cover"
+      className={cn("w-full h-48 object-cover", className)}
       onError={() => setImageError(true)}
     />
   );
@@ -34,6 +34,7 @@ interface Props {
   link?: string;
   image?: string;
   video?: string;
+  videoPosition?: string;
   links?: readonly {
     icon: React.ReactNode;
     type: string;
@@ -51,11 +52,31 @@ export function ProjectCard({
   link,
   image,
   video,
+  videoPosition,
   links,
   className,
 }: Props) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleMouseEnter = () => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  };
+
+  const mediaPosition = videoPosition || (title === "RouteCast" ? "object-left" : "object-center");
+
   return (
     <div
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       className={cn(
         "flex flex-col h-full border border-border rounded-xl overflow-hidden hover:ring-2 cursor-pointer hover:ring-muted transition-all duration-200",
         className
@@ -70,15 +91,17 @@ export function ProjectCard({
         >
           {video ? (
             <video
+              ref={videoRef}
               src={video}
-              autoPlay
+              poster={image}
               loop
               muted
               playsInline
-              className="w-full h-48 object-cover"
+              preload="metadata"
+              className={cn("w-full h-48 object-cover", mediaPosition)}
             />
           ) : image ? (
-            <ProjectImage src={image} alt={title} />
+            <ProjectImage src={image} alt={title} className={mediaPosition} />
           ) : (
             <div className="w-full h-48 bg-muted" />
           )}
